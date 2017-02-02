@@ -1,0 +1,52 @@
+apply plugin: 'groovy'
+apply plugin: "codenarc"
+apply plugin: 'findbugs'
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+
+repositories {
+    jcenter()
+}
+
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'
+
+dependencies {
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.7'
+    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+    compile 'org.grails:java-client-grails-spring-security-rest:0.3'
+    compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+}
+
+test {
+    systemProperties System.properties
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+
+codenarc {
+    toolVersion = '0.25.2'
+}
+
+codenarcMain {
+    ignoreFailures false
+    configFile file("${rootProject.projectDir}/config/codenarc/codenarc.groovy")
+}
+
+codenarcTest {
+    ignoreFailures false
+    configFile file("${rootProject.projectDir}/config/codenarc/codenarcTest.groovy")
+}
