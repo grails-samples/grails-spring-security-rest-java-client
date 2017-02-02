@@ -1,4 +1,4 @@
-package net.transitionmanager.api.client;
+package grailsclient;
 
 import org.grails.springsecurityrest.client.Jwt;
 
